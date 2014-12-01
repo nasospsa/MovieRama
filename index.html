@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>MovieRama</title>
+	<link rel=stylesheet href="assets/bower_components/bootstrap/dist/css/bootstrap.min.css">
+	<link rel=stylesheet href="assets/style/main.css">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div id="main-container" class="col-xs-12">
+				<h1>MovieRama</h1>
+				<div class="panel">
+					<form role="form">
+						<div class="form-group">
+							<input id="input-main" type="email" class="form-control input-lg" placeholder="Search for a movie title...">
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div id="main-results" class="col-xs-12">
+				<h4 id="results-total" class="hide">Total: <span id="results-total-counter"></span></h4>
+				<ul class="media-list">
+					<li class="">
+						<h3 class="text-center">
+							<i>Loading latest movies..</i>
+						</h3>
+					</li>
+				</ul>
+				<h3 id="results-more" class="text-center hide">
+					<i>Loading more...</i>
+				</h3>
+			</div>
+		</div>
+	</div>
+
+	<script id="movie-details-tpl" type="text/template">
+		<p>Genres: <%= details.genres.join(' - ') %></p>
+		<% if (details.abridged_directors) { %>
+		<p>Director: <b><%= details.abridged_directors[0].name %></b></p>
+		<% } %>
+		<div class="row">
+			<% if (similar.movies.length > 0) { %>
+			<div class="col-sm-6">
+				<h3>Similar</h3>
+				<ul class="media-list similar">
+				</ul>
+			</div>
+			<% } %>
+			<% if (reviews.reviews.length > 0) { %>
+			<div class="col-sm-6">
+				<h3>Reviews</h3>
+				<div class="list-group reviews"></div>
+			</div>
+			<% } %>
+		</div>
+	</script>
+
+	<script id="movie-details-similar-tpl" type="text/template">
+		<li class="media">
+			<div class="pull-left">
+				<img class="media-object" src="<%= posters.profile %>" alt="">
+			</div>
+			<div class="media-body">
+				<h4 class="media-heading"><%= title %></h4>
+				<p><%= year %> - <b><%= runtime %> mins</b> - <%= ratings.audience_score %>/100</p>
+			</div>
+		</li>
+	</script>
+
+	<script id="movie-details-review-tpl" type="text/template">
+		<div class="list-group-item review">
+			<p class="list-group-item-text">
+				<i><%= quote %></i>
+			</p>
+			<p><%= critic %> | <b><%= date %></b></p>
+		</div>
+	</script>
+
+	<script id="movie-list-item-tpl" type="text/template">
+		<li class="media">
+			<div class="pull-left">
+				<img class="media-object" src="<%= posters.profile %>" alt="">
+			</div>
+			<div class="media-body">
+				<h2 class="media-heading"><%= title %></h2>
+				<p><%= year %> - <b><%= runtime %> mins</b> - <%= ratings.audience_score %>/100</p>
+				<% if (abridged_cast && abridged_cast.length > 0) { %>
+				<p>Starring <%= _(_(abridged_cast).first(3)).pluck('name').join(', ') %>
+				<% } %>
+				<p><%= synopsis %></p>
+				<p><button type="button" class="btn btn-default">More Info..</button></p>
+				<div class="details"></div>
+			</div>
+		</li>
+	</script>
+
+	<script data-main="assets/app/main" src="assets/bower_components/requirejs/require.js"></script>
+</body>
+</html>

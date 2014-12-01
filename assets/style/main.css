@@ -1,0 +1,7 @@
+#main-results > ul > li {
+	border-top: 1px solid #dedede;
+	padding-top: 20px;
+}
+#main-results > ul > li:first-child {
+	border: none;
+}
